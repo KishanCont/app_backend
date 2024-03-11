@@ -3,7 +3,11 @@ import {
   getAccessToken,
   getAccountInfo,
 } from "../utils/index.js";
-import { createDatabase, saveRefreshTokenToMongo } from "./table.controller.js";
+import {
+  createDatabase,
+  createWebhookDatabase,
+  saveRefreshTokenToMongo,
+} from "./table.controller.js";
 
 export const OAuthCallback = async (req, res) => {
   // Extract the authorization code from the query parameters
@@ -61,7 +65,7 @@ export const OAuthCallback = async (req, res) => {
 export const webhookPayload = async (req, res) => {
   try {
     const data = req.body;
-
+    await createWebhookDatabase("webhook");
     console.log("Received webhook data:", data);
     res.status(200).send("Webhook received successfully");
   } catch (error) {

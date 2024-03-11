@@ -73,4 +73,17 @@ async function createDatabase(portalId) {
   }
 }
 
-export { saveRefreshTokenToMongo, createDatabase };
+async function createWebhookDatabase(dbName) {
+  const connectionUrl = MONGO_URI + dbName;
+  try {
+    const client = new MongoClient(connectionUrl, { useUnifiedTopology: true });
+    await client.connect();
+    await insertDocuments(client.db(dbName), "test_product", documentsToInsert);
+    console.log("MongoDB Connection Successful");
+    client.close();
+  } catch (err) {
+    console.error(`Error: ${err.message}`);
+  }
+}
+
+export { saveRefreshTokenToMongo, createDatabase, createWebhookDatabase };

@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { MONGO_URI } from "../constants/index.js";
 async function createMongoConnection(url, databaseName) {
   try {
     const client = new MongoClient(url, { useUnifiedTopology: true });
@@ -27,8 +28,7 @@ async function insertDocuments(db, collectionName, documents) {
   }
 }
 //const collectionName = "Glasses";
-const dbName = "Token_Database";
-const url = `mongodb+srv://Sooraj:jee1JatiFManli3B@sooraj.dgkx1a8.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
 const documentsToInsert = [
   {
     input_name: "Sample Chair",
@@ -52,7 +52,7 @@ const documentsToInsert = [
 async function saveRefreshTokenToMongo(refreshToken, portalId) {
   const docToInsert = { account: portalId, refresh: refreshToken };
   const collectionName = "RefreshTokens";
-  const db = await createMongoConnection(url, dbName);
+  const db = await createMongoConnection(MONGO_URI, dbName);
   await createTable(db, collectionName);
   await insertDocuments(db, collectionName, docToInsert);
   db.client.close();

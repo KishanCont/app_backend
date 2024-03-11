@@ -5,7 +5,7 @@ import { OAuthCallback } from "../controllers/install.controller.js";
 const installRouter = Router();
 
 // Handle the initial installation request
-installRouter.route("/install").get((_, res) => {
+installRouter.route("/").get((_, res) => {
   // Redirect the user to the HubSpot OAuth 2.0 authorization URL
   res.redirect(AUTHORIZATION_URL);
 });

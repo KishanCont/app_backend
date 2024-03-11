@@ -18,4 +18,6 @@ installRouter.route("/success").get((_, res) => {
   res.end();
 });
 
+installRouter.route("/webhook").post();
+
 export default installRouter;

@@ -52,7 +52,6 @@ export const OAuthCallback = async (req, res) => {
       //     // Create custom properties in HubSpot using the access token
       //     await createCustomProperties(accessToken);
       res.redirect(`/success`);
-      process.exit(0);
     } catch (error) {
       console.log(error);
     }

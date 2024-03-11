@@ -1,12 +1,13 @@
 import axios from "axios";
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from "../constants/index.js";
 
 export async function exchangeAuthorizationCodeForTokens(authorizationCode) {
   // Use the authorization code to obtain the access and refresh tokens
   const params = new URLSearchParams();
   params.append("grant_type", "authorization_code");
-  params.append("client_id", clientId);
-  params.append("client_secret", clientSecret);
-  params.append("redirect_uri", redirectUri);
+  params.append("client_id", CLIENT_ID);
+  params.append("client_secret", CLIENT_SECRET);
+  params.append("redirect_uri", REDIRECT_URI);
   params.append("code", authorizationCode);
   try {
     const response = await axios({
@@ -32,9 +33,9 @@ export async function getAccessToken(refreshToken) {
   // Use the authorization code to obtain the access and refresh tokens
   const params = new URLSearchParams();
   params.append("grant_type", "refresh_token");
-  params.append("client_id", clientId);
-  params.append("client_secret", clientSecret);
-  params.append("redirect_uri", redirectUri);
+  params.append("client_id", CLIENT_ID);
+  params.append("client_secret", CLIENT_SECRET);
+  params.append("redirect_uri", REDIRECT_URI);
   params.append("refresh_token", refreshToken);
   try {
     const response = await axios({

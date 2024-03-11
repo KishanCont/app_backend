@@ -15,9 +15,11 @@ installRouter.route("/").get((_, res) => {
 
 // Handle the OAuth callback after the user grants authorization
 installRouter.route("/oauth-callback").get(OAuthCallback);
+
 installRouter.route("/success").get((_, res) => {
   res.setHeader("Content-Type", "text/html");
   res.write(`<h4>successfully installed<h4>`);
+  res.status(200).send();
   res.end();
 });
 

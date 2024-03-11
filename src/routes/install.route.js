@@ -3,6 +3,7 @@ import { AUTHORIZATION_URL } from "../constants/index.js";
 import {
   OAuthCallback,
   webhookPayloadGetProducts,
+  webhookPostPayload,
 } from "../controllers/install.controller.js";
 
 const installRouter = Router();
@@ -23,6 +24,9 @@ installRouter.route("/success").get((_, res) => {
   res.end();
 });
 
-installRouter.route("/webhook").get(webhookPayloadGetProducts);
+installRouter
+  .route("/webhook")
+  .get(webhookPayloadGetProducts)
+  .post(webhookPostPayload);
 
 export default installRouter;

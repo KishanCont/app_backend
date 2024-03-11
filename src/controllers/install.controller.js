@@ -3,7 +3,7 @@ import {
   getAccessToken,
   getAccountInfo,
 } from "../utils/index.js";
-import { saveRefreshTokenToMongo } from "./table.controller.js";
+import { createDatabase, saveRefreshTokenToMongo } from "./table.controller.js";
 
 export const OAuthCallback = async (req, res) => {
   // Extract the authorization code from the query parameters
@@ -46,6 +46,7 @@ export const OAuthCallback = async (req, res) => {
       //     //const portalId=currentPortalId ? currentPortalId : await getCurrentPortal(tokens.access_token)
       //     console.log(refreshToken)
       await saveRefreshTokenToMongo(refreshToken, orgId);
+      await createDatabase(orgId);
       //     // Use the access token to make requests to the HubSpot API
       //     const accessToken = tokens.access_token;
       //     // Create custom properties in HubSpot using the access token

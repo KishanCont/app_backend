@@ -52,10 +52,23 @@ const documentsToInsert = [
 async function saveRefreshTokenToMongo(refreshToken, portalId) {
   const docToInsert = { account: portalId, refresh: refreshToken };
   const collectionName = "RefreshTokens";
-  const db = await createMongoConnection(MONGO_URI, dbName);
+  const db = await createMongoConnection(MONGO_URI, "Token_Database");
   await createTable(db, collectionName);
   await insertDocuments(db, collectionName, docToInsert);
   db.client.close();
 }
 
-export { saveRefreshTokenToMongo };
+async function createDatabase(portalId) {
+  const dbName = "Account_" + portalId;
+  const connectionUrl = MONGO_URI + dbName;
+  try {
+    const client = new MongoClient(connectionUrl, { useUnifiedTopology: true });
+    await client.connect();
+    console.log("MongoDB Connection Successful");
+    client.close();
+  } catch (err) {
+    console.error(`Error: ${err.message}`);
+  }
+}
+
+export { saveRefreshTokenToMongo, createDatabase };

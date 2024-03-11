@@ -97,7 +97,7 @@ export const webhookPostPayload = async (req, res) => {
       body
     );
     console.log(JSON.stringify(apiResponse, null, 2));
-    res.status(201).json({ message: "subscription created" });
+    res.status(200).json({ message: "subscription created" });
   } catch (e) {
     e.message === "HTTP request failed"
       ? console.error(JSON.stringify(e.response, null, 2))

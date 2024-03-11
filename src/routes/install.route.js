@@ -24,9 +24,8 @@ installRouter.route("/success").get((_, res) => {
   res.end();
 });
 
-installRouter
-  .route("/webhook")
-  .get(webhookPayloadGetProducts)
-  .post(webhookPostPayload);
+installRouter.route("/webhook").post(webhookPostPayload);
+
+installRouter.route("/webhook/getproducts").get(webhookPayloadGetProducts);
 
 export default installRouter;

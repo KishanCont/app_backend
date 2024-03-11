@@ -10,6 +10,7 @@ async function createMongoConnection(url, databaseName) {
     console.error(`Error: ${err.message}`);
   }
 }
+
 async function createTable(db, collectionName) {
   try {
     await db.createCollection(collectionName);
@@ -18,6 +19,7 @@ async function createTable(db, collectionName) {
     console.error(`Error: ${err.message}`);
   }
 }
+
 async function insertDocuments(db, collectionName, documents) {
   try {
     const collection = db.collection(collectionName);
@@ -59,7 +61,7 @@ async function saveRefreshTokenToMongo(refreshToken, portalId) {
 }
 
 async function createDatabase(portalId) {
-  const dbName = "Account_" + portalId;
+  const dbName = "/Account_" + portalId;
   const connectionUrl = MONGO_URI + dbName;
   try {
     const client = new MongoClient(connectionUrl, { useUnifiedTopology: true });

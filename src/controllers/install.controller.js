@@ -58,3 +58,14 @@ export const OAuthCallback = async (req, res) => {
     }
   }
 };
+
+export const webhookPayload = async (req, res) => {
+  try {
+    const data = req.body;
+
+    console.log("Received webhook data:", data);
+    res.status(200).send("Webhook received successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};

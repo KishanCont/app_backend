@@ -1,4 +1,9 @@
 import {
+  CLIENT_ID,
+  HUBSPOT_API_KEY,
+  HUBSPOT_APP_ID,
+} from "../constants/index.js";
+import {
   exchangeAuthorizationCodeForTokens,
   getAccessToken,
   getAccountInfo,
@@ -62,13 +67,40 @@ export const OAuthCallback = async (req, res) => {
   }
 };
 
-export const webhookPayload = async (req, res) => {
+const hubspotClient = new hubspot.Client({
+  developerApiKey: HUBSPOT_API_KEY,
+});
+const appId = HUBSPOT_APP_ID;
+
+export const webhookPayloadGetProducts = async (req, res) => {
   try {
-    const data = req.body;
-    await createWebhookDatabase("webhook");
-    console.log("Received webhook data:", data);
-    res.status(200).send("Webhook received successfully");
-  } catch (error) {
-    console.log(error);
+    const apiResponse = await hubspotClient.webhooks.subscriptionsApi.getAll(
+      appId
+    );
+    console.log(JSON.stringify(apiResponse, null, 2));
+  } catch (e) {
+    e.message === "HTTP request failed"
+      ? console.error(JSON.stringify(e.response, null, 2))
+      : console.error(e);
+  }
+};
+
+export const webhookPostPayload = async (req, res) => {
+  const SubscriptionCreateRequest = {
+    propertyName: "email",
+    active: true,
+    eventType: "contact.propertyChange",
+  };
+
+  try {
+    const apiResponse = await hubspotClient.webhooks.subscriptionsApi.create(
+      appId,
+      SubscriptionCreateRequest
+    );
+    console.log(JSON.stringify(apiResponse, null, 2));
+  } catch (e) {
+    e.message === "HTTP request failed"
+      ? console.error(JSON.stringify(e.response, null, 2))
+      : console.error(e);
   }
 };

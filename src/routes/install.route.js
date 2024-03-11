@@ -2,7 +2,7 @@ import { Router } from "express";
 import { AUTHORIZATION_URL } from "../constants/index.js";
 import {
   OAuthCallback,
-  webhookPayload,
+  webhookPayloadGetProducts,
 } from "../controllers/install.controller.js";
 
 const installRouter = Router();
@@ -23,6 +23,6 @@ installRouter.route("/success").get((_, res) => {
   res.end();
 });
 
-installRouter.route("/webhook").post(webhookPayload);
+installRouter.route("/webhook").get(webhookPayloadGetProducts);
 
 export default installRouter;

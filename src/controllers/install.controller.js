@@ -13,6 +13,7 @@ import {
   createWebhookDatabase,
   saveRefreshTokenToMongo,
 } from "./table.controller.js";
+import hubspot from "@hubspot/api-client";
 
 export const OAuthCallback = async (req, res) => {
   // Extract the authorization code from the query parameters
@@ -67,12 +68,12 @@ export const OAuthCallback = async (req, res) => {
   }
 };
 
-const hubspotClient = new hubspot.Client({
-  developerApiKey: HUBSPOT_API_KEY,
-});
-const appId = HUBSPOT_APP_ID;
-
 export const webhookPayloadGetProducts = async (req, res) => {
+  const hubspotClient = new hubspot.Client({
+    developerApiKey: HUBSPOT_API_KEY,
+  });
+  const appId = HUBSPOT_APP_ID;
+  console.log(HUBSPOT_API_KEY);
   try {
     const apiResponse = await hubspotClient.webhooks.subscriptionsApi.getAll(
       appId

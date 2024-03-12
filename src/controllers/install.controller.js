@@ -133,6 +133,24 @@ export const CRMCardDataFetch = async (req, res) => {
           status: "In Progress",
           ticket_type: "Bug",
           updated: `${record.results[0].updatedAt.toString()}`,
+          properties: [
+            {
+              label: "Resolved by",
+              dataType: "EMAIL",
+              value: "ijones@hubspot.com",
+            },
+            {
+              label: "Resolution type",
+              dataType: "STRING",
+              value: "Referred to documentation",
+            },
+            {
+              label: "Resolution impact",
+              dataType: "CURRENCY",
+              value: "94.34",
+              currencyCode: "GBP",
+            },
+          ],
           actions: [
             {
               type: "IFRAME",
@@ -140,9 +158,53 @@ export const CRMCardDataFetch = async (req, res) => {
               height: 748,
               uri: "https://example.com/edit-iframe-contents",
               label: "Edit",
-              associatedObjectProperties: [],
+              associatedObjectProperties: [
+                {
+                  name: "protected_account",
+                  value: "true",
+                },
+              ],
+            },
+            {
+              type: "CONFIRMATION_ACTION_HOOK",
+              confirmationMessage:
+                "Are you sure you want to delete this ticket?",
+              confirmButtonText: "Yes",
+              cancelButtonText: "No",
+              httpMethod: "DELETE",
+              associatedObjectProperties: [
+                {
+                  label: "ID",
+                  dataType: "STRING",
+                  value: "50994124",
+                },
+                {
+                  label: "Email",
+                  dataType: "EMAIL",
+                  value: "ravi.rawat@contrivers.com",
+                },
+                {
+                  label: "First Name",
+                  dataType: "STRING",
+                  value: "Ravi",
+                },
+                {
+                  label: "Last Name",
+                  dataType: "STRING",
+                  value: "Rawat",
+                },
+              ],
+              uri: "https://example.com/tickets/245",
+              label: "Delete",
             },
           ],
+          primaryAction: {
+            type: "IFRAME",
+            width: 890,
+            height: 748,
+            uri: "https://example.com/create-iframe-contents",
+            label: "Create Ticket",
+          },
         },
       ],
     });

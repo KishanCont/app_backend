@@ -117,8 +117,35 @@ export const CRMCardDataFetch = async (req, res) => {
     const { associatedObjectId } = req.query;
 
     const record = await getRecords(associatedObjectId);
-    await saveTestData(record);
-    res.status(200).send(record);
+    return res.status(200).json({
+      results: [
+        {
+          objectId: `${record.results[0].id}`,
+          title: "API-22: APIs working too fast",
+          link: "http://example.com/1",
+          created: `${record.results[0].createdAt.toString()}`,
+          priority: "HIGH",
+          project: "API",
+          reported_by: "msmith@hubspot.com",
+          description:
+            "Customer reported that the APIs are just running too fast. This is causing a problem in that they're so happy.",
+          reporter_type: "Account Manager",
+          status: "In Progress",
+          ticket_type: "Bug",
+          updated: `${record.results[0].updatedAt.toString()}`,
+          actions: [
+            {
+              type: "IFRAME",
+              width: 890,
+              height: 748,
+              uri: "https://example.com/edit-iframe-contents",
+              label: "Edit",
+              associatedObjectProperties: [],
+            },
+          ],
+        },
+      ],
+    });
   } catch (error) {
     console.log(error.message);
   }

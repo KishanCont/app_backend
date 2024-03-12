@@ -1,5 +1,10 @@
 import axios from "axios";
-import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from "../constants/index.js";
+import {
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI,
+  REFRESH_TOKEN,
+} from "../constants/index.js";
 
 export async function exchangeAuthorizationCodeForTokens(authorizationCode) {
   // Use the authorization code to obtain the access and refresh tokens
@@ -77,7 +82,7 @@ export async function getAccountInfo(accessToken) {
 export async function getRecords(dealId) {
   const getLineItems = `https://api.hubapi.com/crm/v3/objects/line_items?associations.deals=${dealId}`;
   try {
-    const data = await getAccessToken("d4ae88e1-0f15-4945-9985-644358bbc058");
+    const data = await getAccessToken(REFRESH_TOKEN);
     const response = await axios.get(getLineItems, {
       headers: {
         Authorization: `Bearer ${data.access_token}`,

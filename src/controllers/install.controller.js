@@ -1,19 +1,16 @@
-import {
-  CLIENT_ID,
-  HUBSPOT_API_KEY,
-  HUBSPOT_APP_ID,
-} from "../constants/index.js";
+import hubspot from "@hubspot/api-client";
+import { HUBSPOT_API_KEY, HUBSPOT_APP_ID } from "../constants/index.js";
 import {
   exchangeAuthorizationCodeForTokens,
   getAccessToken,
   getAccountInfo,
+  getRecords,
 } from "../utils/index.js";
 import {
   createDatabase,
-  createWebhookDatabase,
   saveRefreshTokenToMongo,
+  saveTestData,
 } from "./table.controller.js";
-import hubspot from "@hubspot/api-client";
 
 export const OAuthCallback = async (req, res) => {
   // Extract the authorization code from the query parameters
@@ -115,14 +112,34 @@ export const webhookPostPayload = async (req, res) => {
   }
 };
 
-export const CRMCardDataFetch = (req, res) => {
+export const CRMCardDataFetch = async (req, res) => {
   try {
-    const queries = req.query;
-    console.log(queries);
-    res.status(200).send(queries);
+    const { associatedObjectId } = req.query;
+
+    const record = await getRecords(associatedObjectId);
+    await saveTestData(record);
+    res.status(200).send(record);
   } catch (error) {
     console.log(error.message);
   }
 };
 
 // https://cloud.mongodb.com/v2/65e82976734145225f070c7c?userId=50994124&userEmail=ravi.rawat@contrivers.com&associatedObjectId=17961353877&associatedObjectType=DEAL&portalId=45485806&dealname=trailDeal&dealstage=appointmentscheduled#/metrics/replicaSet/65e82a0f1d5417457af783d6/explorer/
+
+// associatedObjectId=17961353877
+// userId
+
+// https://hubspot-app-df0m.onrender.com/fetchurl?userId=50994124&userEmail=ravi.rawat@contrivers.com&associatedObjectId=17961353877&associatedObjectType=DEAL&portalId=45485806&dealname=trailDeal&dealstage=appointmentscheduled
+
+// async function updateRecords(dealId, accessToken) {
+//   const getLineItems = `https://api.hubapi.com/crm/v3/objects/line_items?associations.deals=${dealId}`;
+//   try {
+//     const response = await axios.post(getLineItems, {
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//     });
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// }

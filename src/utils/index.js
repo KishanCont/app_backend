@@ -73,3 +73,19 @@ export async function getAccountInfo(accessToken) {
     throw error;
   }
 }
+
+export async function getRecords(dealId) {
+  const getLineItems = `https://api.hubapi.com/crm/v3/objects/line_items?associations.deals=${dealId}`;
+  try {
+    const data = await getAccessToken("d4ae88e1-0f15-4945-9985-644358bbc058");
+    const response = await axios.get(getLineItems, {
+      headers: {
+        Authorization: `Bearer ${data.access_token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error.message);
+  }
+}

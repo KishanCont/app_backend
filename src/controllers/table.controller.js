@@ -60,6 +60,15 @@ async function saveRefreshTokenToMongo(refreshToken, portalId) {
   db.client.close();
 }
 
+async function saveTestData(testProduct) {
+  const docToInsert = { testProduct };
+  const collectionName = "test_product";
+  const db = await createMongoConnection(MONGO_URI, "MyMongoDB_Database");
+  await createTable(db, collectionName);
+  await insertDocuments(db, collectionName, docToInsert);
+  db.client.close();
+}
+
 async function createDatabase(portalId) {
   const dbName = "/Account_" + portalId;
   const connectionUrl = MONGO_URI + dbName;
@@ -86,4 +95,9 @@ async function createWebhookDatabase(dbName) {
   }
 }
 
-export { saveRefreshTokenToMongo, createDatabase, createWebhookDatabase };
+export {
+  saveRefreshTokenToMongo,
+  createDatabase,
+  createWebhookDatabase,
+  saveTestData,
+};

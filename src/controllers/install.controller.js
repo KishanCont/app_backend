@@ -183,6 +183,7 @@ export const CRMCardDataFetch = async (req, res) => {
     //     },
     //   ],
     // });
+    return res.status(200).json({ record });
   } catch (error) {
     console.log(error.message);
   }

@@ -158,12 +158,6 @@ export const CRMCardDataFetch = async (req, res) => {
               height: 748,
               uri: "https://example.com/edit-iframe-contents",
               label: "Edit",
-              associatedObjectProperties: [
-                {
-                  name: "protected_account",
-                  value: "true",
-                },
-              ],
             },
             {
               type: "CONFIRMATION_ACTION_HOOK",
@@ -172,28 +166,6 @@ export const CRMCardDataFetch = async (req, res) => {
               confirmButtonText: "Yes",
               cancelButtonText: "No",
               httpMethod: "DELETE",
-              associatedObjectProperties: [
-                {
-                  label: "ID",
-                  dataType: "STRING",
-                  value: "50994124",
-                },
-                {
-                  label: "Email",
-                  dataType: "EMAIL",
-                  value: "ravi.rawat@contrivers.com",
-                },
-                {
-                  label: "First Name",
-                  dataType: "STRING",
-                  value: "Ravi",
-                },
-                {
-                  label: "Last Name",
-                  dataType: "STRING",
-                  value: "Rawat",
-                },
-              ],
               uri: "https://example.com/tickets/245",
               label: "Delete",
             },

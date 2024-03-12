@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { AUTHORIZATION_URL } from "../constants/index.js";
+import { AUTHORIZATION_URL, HUBSPOT_APP_ID } from "../constants/index.js";
 import {
+  CRMCardDataFetch,
   OAuthCallback,
   webhookPayloadGetProducts,
   webhookPostPayload,
@@ -24,8 +25,11 @@ installRouter.route("/success").get((_, res) => {
   res.end();
 });
 
-installRouter.route("/webhook").post(webhookPostPayload);
+installRouter
+  .route(`/webhook`)
+  .get(webhookPayloadGetProducts)
+  .post(webhookPostPayload);
 
-installRouter.route("/webhook/getproducts").get(webhookPayloadGetProducts);
+installRouter.route("/fetchurl").get(CRMCardDataFetch);
 
 export default installRouter;

@@ -75,8 +75,15 @@ const appId = HUBSPOT_APP_ID;
 
 export const webhookPayloadGetProducts = async (req, res) => {
   try {
-    const apiResponse = await hubspotClient.webhooks.subscriptionsApi.getAll(
-      appId
+    const apiResponse = await hubspotClient.crm.products.getAll(
+      appId,
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(data);
+        }
+      }
     );
     console.log(JSON.stringify(apiResponse, null, 2));
 
@@ -89,18 +96,33 @@ export const webhookPayloadGetProducts = async (req, res) => {
 };
 
 export const webhookPostPayload = async (req, res) => {
-  const body = req.body;
+  const SubscriptionCreateRequest = {
+    propertyName: "email",
+    active: true,
+    eventType: "product.creation",
+  };
 
   try {
     const apiResponse = await hubspotClient.webhooks.subscriptionsApi.create(
       appId,
-      body
+      SubscriptionCreateRequest
     );
     console.log(JSON.stringify(apiResponse, null, 2));
-    res.status(200).json({ message: "subscription created" });
   } catch (e) {
     e.message === "HTTP request failed"
       ? console.error(JSON.stringify(e.response, null, 2))
       : console.error(e);
   }
 };
+
+export const CRMCardDataFetch = (req, res) => {
+  try {
+    const queries = req.query;
+    console.log(queries);
+    res.status(200).send(queries);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// https://cloud.mongodb.com/v2/65e82976734145225f070c7c?userId=50994124&userEmail=ravi.rawat@contrivers.com&associatedObjectId=17961353877&associatedObjectType=DEAL&portalId=45485806&dealname=trailDeal&dealstage=appointmentscheduled#/metrics/replicaSet/65e82a0f1d5417457af783d6/explorer/

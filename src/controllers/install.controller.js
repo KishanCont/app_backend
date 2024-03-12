@@ -123,10 +123,10 @@ export const CRMCardDataFetch = async (req, res) => {
     return res.status(200).json({
       results: [
         {
-          objectId: record.results[0].id || 200,
+          objectId: 200,
           title: "API-22: APIs working too fast",
           link: "http://example.com/1",
-          created: `${record.results[0].createdAt.toString()}`,
+          created: "22 Feb 2024",
           priority: "HIGH",
           project: "API",
           reported_by: "msmith@hubspot.com",
@@ -135,23 +135,11 @@ export const CRMCardDataFetch = async (req, res) => {
           reporter_type: "Account Manager",
           status: "In Progress",
           ticket_type: "Bug",
-          updated: `${record.results[0].updatedAt.toString()}`,
           properties: [
             {
               label: "Resolved by",
               dataType: "EMAIL",
               value: "ijones@hubspot.com",
-            },
-            {
-              label: "Resolution type",
-              dataType: "STRING",
-              value: "Referred to documentation",
-            },
-            {
-              label: "Resolution impact",
-              dataType: "CURRENCY",
-              value: "94.34",
-              currencyCode: "GBP",
             },
           ],
           actions: [
@@ -173,13 +161,6 @@ export const CRMCardDataFetch = async (req, res) => {
               label: "Delete",
             },
           ],
-          primaryAction: {
-            type: "IFRAME",
-            width: 890,
-            height: 748,
-            uri: "https://example.com/create-iframe-contents",
-            label: "Create Ticket",
-          },
         },
       ],
     });

@@ -118,7 +118,7 @@ export const CRMCardDataFetch = async (req, res) => {
 
     const record = await getRecords(associatedObjectId);
 
-    await saveTestData(record);
+    // await saveTestData(record);
 
     return res.status(200).json({
       results: [

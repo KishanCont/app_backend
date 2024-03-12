@@ -117,69 +117,72 @@ export const CRMCardDataFetch = async (req, res) => {
     const { associatedObjectId } = req.query;
 
     const record = await getRecords(associatedObjectId);
-    return res.status(200).json({
-      results: [
-        {
-          objectId: `${record.results[0].id}`,
-          title: "API-22: APIs working too fast",
-          link: "http://example.com/1",
-          created: `${record.results[0].createdAt.toString()}`,
-          priority: "HIGH",
-          project: "API",
-          reported_by: "msmith@hubspot.com",
-          description:
-            "Customer reported that the APIs are just running too fast. This is causing a problem in that they're so happy.",
-          reporter_type: "Account Manager",
-          status: "In Progress",
-          ticket_type: "Bug",
-          updated: `${record.results[0].updatedAt.toString()}`,
-          properties: [
-            {
-              label: "Resolved by",
-              dataType: "EMAIL",
-              value: "ijones@hubspot.com",
-            },
-            {
-              label: "Resolution type",
-              dataType: "STRING",
-              value: "Referred to documentation",
-            },
-            {
-              label: "Resolution impact",
-              dataType: "CURRENCY",
-              value: "94.34",
-              currencyCode: "GBP",
-            },
-          ],
-          actions: [
-            {
-              type: "IFRAME",
-              width: 890,
-              height: 748,
-              uri: "https://example.com/edit-iframe-contents",
-              label: "Edit",
-            },
-            {
-              type: "CONFIRMATION_ACTION_HOOK",
-              confirmationMessage:
-                "Are you sure you want to delete this ticket?",
-              confirmButtonText: "Yes",
-              cancelButtonText: "No",
-              httpMethod: "DELETE",
-              uri: "https://example.com/tickets/245",
-              label: "Delete",
-            },
-          ],
-          primaryAction: {
-            type: "IFRAME",
-            width: 890,
-            height: 748,
-            uri: "https://example.com/create-iframe-contents",
-            label: "Create Ticket",
-          },
-        },
-      ],
-    });
+
+    await saveTestData(record);
+
+    // return res.status(200).json({
+    //   results: [
+    //     {
+    //       objectId: record.results[0].id,
+    //       title: "API-22: APIs working too fast",
+    //       link: "http://example.com/1",
+    //       created: `${record.results[0].createdAt.toString()}`,
+    //       priority: "HIGH",
+    //       project: "API",
+    //       reported_by: "msmith@hubspot.com",
+    //       description:
+    //         "Customer reported that the APIs are just running too fast. This is causing a problem in that they're so happy.",
+    //       reporter_type: "Account Manager",
+    //       status: "In Progress",
+    //       ticket_type: "Bug",
+    //       updated: `${record.results[0].updatedAt.toString()}`,
+    //       properties: [
+    //         {
+    //           label: "Resolved by",
+    //           dataType: "EMAIL",
+    //           value: "ijones@hubspot.com",
+    //         },
+    //         {
+    //           label: "Resolution type",
+    //           dataType: "STRING",
+    //           value: "Referred to documentation",
+    //         },
+    //         {
+    //           label: "Resolution impact",
+    //           dataType: "CURRENCY",
+    //           value: "94.34",
+    //           currencyCode: "GBP",
+    //         },
+    //       ],
+    //       actions: [
+    //         {
+    //           type: "IFRAME",
+    //           width: 890,
+    //           height: 748,
+    //           uri: "https://example.com/edit-iframe-contents",
+    //           label: "Edit",
+    //         },
+    //         {
+    //           type: "CONFIRMATION_ACTION_HOOK",
+    //           confirmationMessage:
+    //             "Are you sure you want to delete this ticket?",
+    //           confirmButtonText: "Yes",
+    //           cancelButtonText: "No",
+    //           httpMethod: "DELETE",
+    //           uri: "https://example.com/tickets/245",
+    //           label: "Delete",
+    //         },
+    //       ],
+    //       primaryAction: {
+    //         type: "IFRAME",
+    //         width: 890,
+    //         height: 748,
+    //         uri: "https://example.com/create-iframe-contents",
+    //         label: "Create Ticket",
+    //       },
+    //     },
+    //   ],
+    // });
   } catch (error) {
     console.log(error.message);
   }

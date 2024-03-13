@@ -147,7 +147,7 @@ export const CRMCardDataFetch = async (req, res) => {
               type: "IFRAME",
               width: 890,
               height: 748,
-              uri: "/",
+              uri: "https://hubspot-app-plum.vercel.app/",
               label: "Edit",
             },
             {
